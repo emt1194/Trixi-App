@@ -85,3 +85,33 @@ body {
 .gradient-border-button:hover {
   color: white;
 }
+
+.buttons-area
+{  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+  .button-small {
+    padding:5px!important;
+  }
+
+@media (max-width: 560px) {
+  .button-wide {
+    display: none;
+  }
+
+  .button-small {
+    display: inline;
+  }
+  
+  .logo img
+  {max-width:180px;}
+}
+
+@media (min-width: 560px) {
+  .button-small {
+    display: none;
+  }
+
