@@ -86,6 +86,11 @@ body {
   color: white;
 }
 
+.trixi-footer
+{
+	margin-top:20px;
+}
+
 .buttons-area
 {  display: inline-flex;
   align-items: center;
