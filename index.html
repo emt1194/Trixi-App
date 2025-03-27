@@ -73,14 +73,15 @@
     </div>
   </header>
   
- <div class="w-full flex justify-end max-w-[1200px] px-6 mt-4 mx-auto">
-  <div id="wallet-address-display" class="text-sm px-4 py-2 text-[#00FFA3] bg-[#1C1E26] rounded-2xl hidden text-right max-w-full break-words">
+ <div class="w-full flex justify-end max-w-[1200px] px-6 mt-0 mx-auto">
+  <div id="wallet-address-display"
+     class="w-full sm:max-w-[400px] text-sm text-right bg-[#1C1E26] text-white rounded-2xl hidden px-4 py-2 mb-4">
   </div>
 </div>
 
 
   <!-- Main content area -->
-  <main class="w-full max-w-[1200px] mt-12 px-6 flex flex-col gap-6 flex-1 relative z-10">
+  <main class="w-full max-w-[1200px] px-6 flex flex-col gap-6 flex-1 relative z-10">
 
 <!-- Panel 1 -->
 <div class="relative z-20 w-full h-[600px] rounded-2xl overflow-hidden">
@@ -103,10 +104,38 @@
   </main>
 
   <!-- Footer -->
- <footer class="w-full max-w-[1200px] text-center py-4 text-sm bg-[#0D0E12] border-t border-gray-700 trixi-footer">
-  © 2025 TrixiAI. All rights reserved.
- </footer>
-<script>
+  <footer class="w-full mt-20 bg-[#1C1E26] text-white">
+    <div class="max-w-[1200px] mx-auto px-6 py-12 flex flex-row flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center">
+        <img src="./img/trixi-logo.png" alt="Trixi Logo" class="w-[150px] h-auto">
+      </div>
+    
+  <div class="text-gray-500 text-sm flex flex-wrap items-center gap-4">
+   
+    <a href="https://t.me/TrixiVerse" target="_blank"
+       class="hover:text-white hover:underline transition">
+      Telegram
+    </a>
+    <a href="https://discord.gg/cY5ETJtnT6" target="_blank"
+       class="hover:text-white hover:underline transition">
+      Discord
+    </a>
+     <span>© 2025 TrixiVerse.</span>
+  </div>
+  
+  
+    </div>
+  </footer>
+
+ <script>
+
+function truncateAddress(addr) {
+  return `${addr.slice(0, 12)}...${addr.slice(-8)}`;
+}
+
+
+  const TRIXI_MINT = "BE7o6vC8c7yXbXYodksospGs6g58SFa68ziUHoMg733v";
+  const connection = new solanaWeb3.Connection("https://rpc.helius.xyz/?api-key=acad15a6-4a95-47f6-b6f5-b5922e99413a");
   async function connectSolanaWallet() {
     try {
       if (window.solana && window.solana.isPhantom) {
@@ -114,82 +143,97 @@
         const walletAddress = resp.publicKey.toString();
 
         const addressDisplay = document.getElementById('wallet-address-display');
-        addressDisplay.textContent = `Address: ${walletAddress}`;
+        addressDisplay.innerHTML = `Address: ${walletAddress}<br>Loading balances...`;
         addressDisplay.classList.remove('hidden');
+
+        // Get SOL balance
+        const balanceLamports = await connection.getBalance(resp.publicKey);
+        const solBalance = balanceLamports / solanaWeb3.LAMPORTS_PER_SOL;
+
+        // Get $TRIXI balance (SPL token)
+        const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+          resp.publicKey,
+          { mint: new solanaWeb3.PublicKey(TRIXI_MINT) }
+        );
+
+        let trixiBalance = 0;
+        if (tokenAccounts.value.length > 0) {
+          trixiBalance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
+        }
+
+        // Display
+        addressDisplay.innerHTML = `
+  <div class="text-sm text-right w-full">
+    <div>
+      <span class="text-gray-400">Wallet Address:</span>
+      <span class="text-white ml-1">${truncateAddress(walletAddress)}</span>
+    </div>
+    <div class="flex justify-end gap-6 mt-1 text-sm">
+      <div>
+        <span class="text-gray-400">$SOL:</span>
+        <span class="text-[#00FFA3] ml-1">${solBalance.toFixed(4)} SOL</span>
+      </div>
+      <div>
+        <span class="text-gray-400">$TRIXI:</span>
+        <span class="text-[#00FFA3] ml-1">${trixiBalance.toFixed(2)} TRIXI</span>
+      </div>
+    </div>
+  </div>
+`;
+
+
+
       } else {
         alert("Phantom wallet not found. Please install it: https://phantom.app/");
       }
     } catch (err) {
-      console.error('Wallet connection failed:', err);
+      console.error("Wallet connection or RPC call failed:", err);
+      document.getElementById('wallet-address-display').innerHTML += "<br>⚠️ Error fetching balances.";
     }
   }
-
-  window.addEventListener('load', async () => {
-    if (window.solana && window.solana.isPhantom) {
-      try {
-        const resp = await window.solana.connect({ onlyIfTrusted: true });
-        const walletAddress = resp.publicKey.toString();
-
-        const addressDisplay = document.getElementById('wallet-address-display');
-        addressDisplay.textContent = `Connected Wallet: ${walletAddress}`;
-        addressDisplay.classList.remove('hidden');
-      } catch (err) {
-        // do nothing — user hasn't connected yet
-      }
-    }
-  });
 </script>
 
-<script>
-  document.getElementById('connect-wallet').addEventListener('click', async () => {
-    if (window.solana && window.solana.isPhantom) {
-      try {
-        const res = await window.solana.connect();
-        const addr = res.publicKey.toString();
-
-        document.getElementById('wallet-address').innerText = addr;
-        document.getElementById('wallet-panel').style.display = 'block';
-      } catch (err) {
-        console.error('Connection failed', err);
-      }
-    } else {
-      alert('Phantom Wallet not found');
-    }
-  });
-</script>
 
 <script>
   const settingsBtn = document.getElementById('settings-btn');
+  const settingsIconBtn = document.querySelector('.button-small'); // this is the cog icon
   const settingsDropdown = document.getElementById('settings-dropdown');
   const disconnectBtn = document.getElementById('disconnect-wallet');
 
   // Toggle dropdown
-  settingsBtn.addEventListener('click', () => {
+  function toggleDropdown() {
     settingsDropdown.classList.toggle('hidden');
-  });
+  }
+
+  settingsBtn?.addEventListener('click', toggleDropdown);
+  settingsIconBtn?.addEventListener('click', toggleDropdown);
 
   // Disconnect wallet
-  disconnectBtn.addEventListener('click', async () => {
-    if (window.solana && window.solana.disconnect) {
+  disconnectBtn?.addEventListener('click', async () => {
+    if (window.solana?.disconnect) {
       await window.solana.disconnect();
     }
 
-    // Hide wallet display
     const addressDisplay = document.getElementById('wallet-address-display');
     addressDisplay.classList.add('hidden');
     addressDisplay.textContent = '';
 
-    // Optionally: close dropdown
     settingsDropdown.classList.add('hidden');
   });
 
-  // Optional: hide dropdown when clicking outside
+  // Close dropdown when clicking outside
   document.addEventListener('click', (e) => {
-    if (!settingsBtn.contains(e.target) && !settingsDropdown.contains(e.target)) {
+    const isClickInside =
+      settingsBtn?.contains(e.target) ||
+      settingsIconBtn?.contains(e.target) ||
+      settingsDropdown.contains(e.target);
+
+    if (!isClickInside) {
       settingsDropdown.classList.add('hidden');
     }
   });
 </script>
+
 
 
 </body>
