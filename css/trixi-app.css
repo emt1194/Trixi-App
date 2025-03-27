@@ -126,3 +126,30 @@ body {
     font-size: 0.95rem; /* optional tweak to help fit smaller screens */
   }
 }
+
+.wallet-panel {
+  position: fixed;
+  top: 100px; /* adjust as needed for spacing under nav */
+  right: 20px;
+  width: 280px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 16px 20px;
+  z-index: 1000;
+  font-family: 'Inter', sans-serif;
+}
+
+.wallet-panel h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.wallet-panel p {
+  word-break: break-all;
+  color: #555;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
