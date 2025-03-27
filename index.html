@@ -99,7 +99,7 @@
         const walletAddress = resp.publicKey.toString();
 
         const addressDisplay = document.getElementById('wallet-address-display');
-        addressDisplay.textContent = `Connected Wallet: ${walletAddress}`;
+        addressDisplay.textContent = `Address: ${walletAddress}`;
         addressDisplay.classList.remove('hidden');
       } else {
         alert("Phantom wallet not found. Please install it: https://phantom.app/");
