@@ -40,6 +40,8 @@
 
   <!-- Trixi Styles -->
   <link href="./css/trixi-app.css" rel="stylesheet" type="text/css" />
+  <!-- Trixi JS-->
+  <script src="./js/trixi-app.js" defer></script>
 </head>
 
 <body class="text-white min-h-screen flex flex-col items-center relative">
@@ -54,29 +56,38 @@
     </div>
     <div class="space-x-4 buttons-area">
       <div class="relative">
-  <button id="settings-btn" class="bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl transition button-wide">
-    Settings
-  </button>
-  <div id="settings-dropdown" class="absolute right-0 mt-2 w-48 bg-[#1C1E26] text-white rounded-xl shadow-lg border border-[#2B2D36] hidden z-50">
-   <button id="disconnect-wallet" class="w-full text-left px-4 py-2 hover:bg-[#2B2D36] rounded-b-xl rounded-t-xl">
-  Disconnect Wallet
-</button>
-
-  </div>
-</div>
-
-	  <button class="bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl transition button-small"><svg width="30px" height="30px" viewBox="0 0 25 25" fill="#fff" xmlns="http://www.w3.org/2000/svg">
-<path d="M14.2624 5.40607L13.8714 4.42848C13.6471 3.86771 13.104 3.5 12.5 3.5C11.896 3.5 11.3529 3.86771 11.1286 4.42848L10.7376 5.40607C10.5857 5.78585 10.2869 6.08826 9.90901 6.2448C9.53111 6.40133 9.10603 6.39874 8.73006 6.23761L7.76229 5.82285C7.20716 5.58494 6.56311 5.70897 6.13604 6.13604C5.70897 6.56311 5.58494 7.20716 5.82285 7.76229L6.23761 8.73006C6.39874 9.10602 6.40133 9.53111 6.2448 9.90901C6.08826 10.2869 5.78585 10.5857 5.40607 10.7376L4.42848 11.1286C3.86771 11.3529 3.5 11.896 3.5 12.5C3.5 13.104 3.86771 13.6471 4.42848 13.8714L5.40607 14.2624C5.78585 14.4143 6.08826 14.7131 6.2448 15.091C6.40133 15.4689 6.39874 15.894 6.23761 16.2699L5.82285 17.2377C5.58494 17.7928 5.70897 18.4369 6.13604 18.864C6.56311 19.291 7.20716 19.4151 7.76229 19.1772L8.73006 18.7624C9.10603 18.6013 9.53111 18.5987 9.90901 18.7552C10.2869 18.9117 10.5857 19.2141 10.7376 19.5939L11.1286 20.5715C11.3529 21.1323 11.896 21.5 12.5 21.5C13.104 21.5 13.6471 21.1323 13.8714 20.5715L14.2624 19.5939C14.4143 19.2141 14.7131 18.9117 15.091 18.7552C15.4689 18.5987 15.894 18.6013 16.2699 18.7624L17.2377 19.1771C17.7928 19.4151 18.4369 19.291 18.864 18.864C19.291 18.4369 19.4151 17.7928 19.1771 17.2377L18.7624 16.2699C18.6013 15.894 18.5987 15.4689 18.7552 15.091C18.9117 14.7131 19.2141 14.4143 19.5939 14.2624L20.5715 13.8714C21.1323 13.6471 21.5 13.104 21.5 12.5C21.5 11.896 21.1323 11.3529 20.5715 11.1286L19.5939 10.7376C19.2141 10.5857 18.9117 10.2869 18.7552 9.90901C18.5987 9.53111 18.6013 9.10602 18.7624 8.73006L19.1772 7.76229C19.4151 7.20716 19.291 6.56311 18.864 6.13604C18.4369 5.70897 17.7928 5.58494 17.2377 5.82285L16.2699 6.23761C15.894 6.39874 15.4689 6.40133 15.091 6.2448C14.7131 6.08826 14.4143 5.78585 14.2624 5.40607Z" stroke="#121923" stroke-width="1.2"/>
-<path d="M16.5 12.5C16.5 14.7091 14.7091 16.5 12.5 16.5C10.2909 16.5 8.5 14.7091 8.5 12.5C8.5 10.2909 10.2909 8.5 12.5 8.5C14.7091 8.5 16.5 10.2909 16.5 12.5Z" stroke="#121923" stroke-width="1.2"/>
-</svg></button>
-      <button onclick="connectSolanaWallet()" class="bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl gradient-border-button transition">Connect Wallet</button>
+        <!-- Settings Button (Text and Icon) -->
+        <button id="settings-btn" class="inactive-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-2 py-2 rounded-xl transition">
+          <span class="settings-text">Settings</span><div class="settings-icon-container">
+          <svg width="30px" height="30px" viewBox="0 0 25 25" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14.2624 5.40607L13.8714 4.42848C13.6471 3.86771 13.104 3.5 12.5 3.5C11.896 3.5 11.3529 3.86771 11.1286 4.42848L10.7376 5.40607C10.5857 5.78585 10.2869 6.08826 9.90901 6.2448C9.53111 6.40133 9.10603 6.39874 8.73006 6.23761L7.76229 5.82285C7.20716 5.58494 6.56311 5.70897 6.13604 6.13604C5.70897 6.56311 5.58494 7.20716 5.82285 7.76229L6.23761 8.73006C6.39874 9.10602 6.40133 9.53111 6.2448 9.90901C6.08826 10.2869 5.78585 10.5857 5.40607 10.7376L4.42848 11.1286C3.86771 11.3529 3.5 11.896 3.5 12.5C3.5 13.104 3.86771 13.6471 4.42848 13.8714L5.40607 14.2624C5.78585 14.4143 6.08826 14.7131 6.2448 15.091C6.40133 15.4689 6.39874 15.894 6.23761 16.2699L5.82285 17.2377C5.58494 17.7928 5.70897 18.4369 6.13604 18.864C6.56311 19.291 7.20716 19.4151 7.76229 19.1772L8.73006 18.7624C9.10603 18.6013 9.53111 18.5987 9.90901 18.7552C10.2869 18.9117 10.5857 19.2141 10.7376 19.5939L11.1286 20.5715C11.3529 21.1323 11.896 21.5 12.5 21.5C13.104 21.5 13.6471 21.1323 13.8714 20.5715L14.2624 19.5939C14.4143 19.2141 14.7131 18.9117 15.091 18.7552C15.4689 18.5987 15.894 18.6013 16.2699 18.7624L17.2377 19.1771C17.7928 19.4151 18.4369 19.291 18.864 18.864C19.291 18.4369 19.4151 17.7928 19.1771 17.2377L18.7624 16.2699C18.6013 15.894 18.5987 15.4689 18.7552 15.091C18.9117 14.7131 19.2141 14.4143 19.5939 14.2624L20.5715 13.8714C21.1323 13.6471 21.5 13.104 21.5 12.5C21.5 11.896 21.1323 11.3529 20.5715 11.1286L19.5939 10.7376C19.2141 10.5857 18.9117 10.2869 18.7552 9.90901C18.5987 9.53111 18.6013 9.10602 18.7624 8.73006L19.1772 7.76229C19.4151 7.20716 19.291 6.56311 18.864 6.13604C18.4369 5.70897 17.7928 5.58494 17.2377 5.82285L16.2699 6.23761C15.894 6.39874 15.4689 6.40133 15.091 6.2448C14.7131 6.08826 14.4143 5.78585 14.2624 5.40607Z" stroke="#121923" stroke-width="1.2"/>
+            <path d="M16.5 12.5C16.5 14.7091 14.7091 16.5 12.5 16.5C10.2909 16.5 8.5 14.7091 8.5 12.5C8.5 10.2909 10.2909 8.5 12.5 8.5C14.7091 8.5 16.5 10.2909 16.5 12.5Z" stroke="#121923" stroke-width="1.2"/>
+            </svg></div>
+        </button>
+        <!-- Settings Dropdown -->
+        <div id="settings-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-[#1C1E26] text-white rounded-xl shadow-lg border border-[#2B2D36] z-50">
+          <button id="disconnect-wallet" class="w-full text-left px-4 py-2 hover:bg-[#2B2D36] rounded-b-xl rounded-t-xl">
+            Disconnect Wallet
+          </button>
+        </div>
+      </div>
+  
+      <!-- Connect Wallet Button -->
+      <button onclick="connectSolanaWallet()" class="solana-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl gradient-border-button transition">Connect Wallet</button>
     </div>
   </header>
   
+
+  
+  
  <div class="w-full flex justify-end max-w-[1200px] px-6 mt-0 mx-auto">
-  <div id="wallet-address-display"
-     class="w-full sm:max-w-[400px] text-sm text-right bg-[#1C1E26] text-white rounded-2xl hidden px-4 py-2 mb-4">
+<!-- Wallet Panel Wrapper -->
+<div id="wallet-panel-wrapper" class="w-full max-w-[1200px] mb-4">
+  <!-- Wallet Panel that toggles visibility -->
+  <div id="wallet-address-display" class="w-full sm:max-w-[400px] text-sm text-right bg-[#1C1E26] text-white rounded-2xl hidden px-4 py-2">
   </div>
+</div>
+
 </div>
 
 
@@ -84,7 +95,7 @@
   <main class="w-full max-w-[1200px] px-6 flex flex-col gap-6 flex-1 relative z-10">
 
 <!-- Panel 1 -->
-<div class="relative z-20 w-full h-[600px] rounded-2xl overflow-hidden">
+<div id="primary-panel" class="relative panel-inactive z-20 w-full h-[600px] rounded-2xl overflow-hidden primary-panel">
   <img src="./img/trixi-blur.jpg" alt="Trixi Panel Image" class="w-full h-full object-cover">
   <div class="absolute inset-0 flex items-center justify-center">
     <h1 class="text-white text-3xl font-semibold">App coming soon</h1>
@@ -95,146 +106,39 @@
     <!-- Panels 2 & 3 -->
     <div class="flex flex-col md:flex-row gap-6">
       <div class="bg-[#1C1E26] rounded-2xl p-6 w-full md:w-1/2 h-[150px]">
-        <!--Panel 2<br><br>Lorem ipsum dolor.-->
+
+
+      
       </div>
       <div class="bg-[#1C1E26] rounded-2xl p-6 w-full md:w-1/2 h-[150px]">
-        <!--Panel 3<br><br>Lorem ipsum dolor.-->
-      </div>
+        <div id="token-price">.</div>
+        <div id="trixi1">VALUE1</div>
+      <div id="trixi2">VALUE2</div>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="w-full mt-20 bg-[#1C1E26] text-white">
-    <div class="max-w-[1200px] mx-auto px-6 py-12 flex flex-row flex-wrap items-center justify-between gap-4">
-      <div class="flex items-center">
-        <img src="./img/trixi-logo.png" alt="Trixi Logo" class="w-[150px] h-auto">
-      </div>
-    
-  <div class="text-gray-500 text-sm flex flex-wrap items-center gap-4">
-   
-    <a href="https://t.me/TrixiVerse" target="_blank"
-       class="hover:text-white hover:underline transition">
-      Telegram
-    </a>
-    <a href="https://discord.gg/cY5ETJtnT6" target="_blank"
-       class="hover:text-white hover:underline transition">
-      Discord
-    </a>
-     <span>© 2025 TrixiVerse.</span>
+<footer class="w-full mt-20 bg-[#1C1E26] text-white">
+  <div class="max-w-[1200px] mx-auto px-6 py-12 flex flex-row flex-wrap items-center justify-between gap-4">
+    <div class="flex items-center">
+      <img src="./img/trixi-logo.png" alt="Trixi Logo" class="w-[150px] h-auto">
+    </div>
+	
+<div class="text-gray-500 text-sm flex flex-wrap items-center gap-4">
+ 
+  <a href="https://t.me/TrixiVerse" target="_blank"
+     class="hover:text-white hover:underline transition">
+    Telegram
+  </a>
+  <a href="https://discord.gg/cY5ETJtnT6" target="_blank"
+     class="hover:text-white hover:underline transition">
+    Discord
+  </a>
+   <span>© 2025 TrixiVerse.</span>
+</div>
+
+
   </div>
-  
-  
-    </div>
-  </footer>
-
- <script>
-
-function truncateAddress(addr) {
-  return `${addr.slice(0, 12)}...${addr.slice(-8)}`;
-}
-
-
-  const TRIXI_MINT = "BE7o6vC8c7yXbXYodksospGs6g58SFa68ziUHoMg733v";
-  const connection = new solanaWeb3.Connection("https://rpc.helius.xyz/?api-key=acad15a6-4a95-47f6-b6f5-b5922e99413a");
-  async function connectSolanaWallet() {
-    try {
-      if (window.solana && window.solana.isPhantom) {
-        const resp = await window.solana.connect();
-        const walletAddress = resp.publicKey.toString();
-
-        const addressDisplay = document.getElementById('wallet-address-display');
-        addressDisplay.innerHTML = `Address: ${walletAddress}<br>Loading balances...`;
-        addressDisplay.classList.remove('hidden');
-
-        // Get SOL balance
-        const balanceLamports = await connection.getBalance(resp.publicKey);
-        const solBalance = balanceLamports / solanaWeb3.LAMPORTS_PER_SOL;
-
-        // Get $TRIXI balance (SPL token)
-        const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
-          resp.publicKey,
-          { mint: new solanaWeb3.PublicKey(TRIXI_MINT) }
-        );
-
-        let trixiBalance = 0;
-        if (tokenAccounts.value.length > 0) {
-          trixiBalance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
-        }
-
-        // Display
-        addressDisplay.innerHTML = `
-  <div class="text-sm text-right w-full">
-    <div>
-      <span class="text-gray-400">Wallet Address:</span>
-      <span class="text-white ml-1">${truncateAddress(walletAddress)}</span>
-    </div>
-    <div class="flex justify-end gap-6 mt-1 text-sm">
-      <div>
-        <span class="text-gray-400">$SOL:</span>
-        <span class="text-[#00FFA3] ml-1">${solBalance.toFixed(4)} SOL</span>
-      </div>
-      <div>
-        <span class="text-gray-400">$TRIXI:</span>
-        <span class="text-[#00FFA3] ml-1">${trixiBalance.toFixed(2)} TRIXI</span>
-      </div>
-    </div>
-  </div>
-`;
-
-
-
-      } else {
-        alert("Phantom wallet not found. Please install it: https://phantom.app/");
-      }
-    } catch (err) {
-      console.error("Wallet connection or RPC call failed:", err);
-      document.getElementById('wallet-address-display').innerHTML += "<br>⚠️ Error fetching balances.";
-    }
-  }
-</script>
-
-
-<script>
-  const settingsBtn = document.getElementById('settings-btn');
-  const settingsIconBtn = document.querySelector('.button-small'); // this is the cog icon
-  const settingsDropdown = document.getElementById('settings-dropdown');
-  const disconnectBtn = document.getElementById('disconnect-wallet');
-
-  // Toggle dropdown
-  function toggleDropdown() {
-    settingsDropdown.classList.toggle('hidden');
-  }
-
-  settingsBtn?.addEventListener('click', toggleDropdown);
-  settingsIconBtn?.addEventListener('click', toggleDropdown);
-
-  // Disconnect wallet
-  disconnectBtn?.addEventListener('click', async () => {
-    if (window.solana?.disconnect) {
-      await window.solana.disconnect();
-    }
-
-    const addressDisplay = document.getElementById('wallet-address-display');
-    addressDisplay.classList.add('hidden');
-    addressDisplay.textContent = '';
-
-    settingsDropdown.classList.add('hidden');
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener('click', (e) => {
-    const isClickInside =
-      settingsBtn?.contains(e.target) ||
-      settingsIconBtn?.contains(e.target) ||
-      settingsDropdown.contains(e.target);
-
-    if (!isClickInside) {
-      settingsDropdown.classList.add('hidden');
-    }
-  });
-</script>
-
-
-
+</footer>
 </body>
 </html>

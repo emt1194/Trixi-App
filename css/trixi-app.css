@@ -97,28 +97,11 @@ body {
   justify-content: center;
 
 }
-
-  .button-small {
-    padding:5px!important;
-  }
-
-@media (max-width: 560px) {
-  .button-wide {
-    display: none;
-  }
-
-  .button-small {
-    display: inline;
-  }
   
   .logo img
   {max-width:180px;}
-}
 
-@media (min-width: 560px) {
-  .button-small {
-    display: none;
-  }
+
 
 @media screen and (max-device-width: 480px) and (orientation: portrait) {
   .gradient-border-button {
@@ -127,30 +110,74 @@ body {
   }
 }
 
-.wallet-panel {
-  position: fixed;
-  top: 100px; /* adjust as needed for spacing under nav */
-  right: 20px;
-  width: 280px;
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  padding: 16px 20px;
-  z-index: 1000;
-  font-family: 'Inter', sans-serif;
+/* Ensure the panel is aligned to the right */
+#wallet-panel-wrapper {
+  display: flex;
+  justify-content: flex-end; /* Align the wallet address display to the right */
+  width: 100%;
+  height:60px;
 }
 
-.wallet-panel h3 {
-  margin-top: 0;
-  font-size: 1.1rem;
-  color: #333;
+#wallet-address-display {
+  width: 100%;
+  max-width: 400px; /* Adjust the max width as needed */
+  text-align: right; /* Ensure the content is aligned to the right inside the panel */
 }
 
-.wallet-panel p {
-  word-break: break-all;
-  color: #555;
-  font-weight: 500;
-  font-size: 0.95rem;
+/* Inactive (faded) button style */
+.inactive-button {
+  opacity: 0.5;
+  pointer-events: none; /* Prevent clicks */
+  cursor: not-allowed;  /* Change cursor to indicate it's disabled */
+}
+
+/* Inactive state for all buttons with 'inactive-button' class */
+.inactive-button {
+  opacity: 0.5;
+  pointer-events: none; /* Prevent clicks */
+  cursor: not-allowed;  /* Change cursor to indicate it's disabled */
+}
+
+
+/* Default button style for the Settings button (desktop) */
+#settings-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1.5rem; /* Larger padding for desktop */
+}
+
+/* By default, hide the SVG cog icon container (on desktop) */
+.settings-icon-container {
+  display: none; /* Hide the cog icon by default */
+}
+
+/* On mobile screens, hide the text and only show the icon */
+@media (max-width: 560px) {
+  /* Hide the text on mobile */
+  .settings-text {
+    display: none; /* Hide text on mobile */
+  }
+
+  /* Show the cog icon container on mobile */
+  .settings-icon-container {
+    display: inline-block; /* Show the cog icon container */
+  }
+
+  /* Adjust the button size for mobile */
+  #settings-btn {
+    padding: 0.3rem 0.5rem; /* Smaller padding for mobile */
+  }
+}
+
+#trixi1, #trixi2, #token-price {
+  display: none;
+}
+
+/* Inactive panel styles (grayscale, 50% opacity, non-clickable) */
+.panel-inactive {
+  opacity: 0.5;
+  pointer-events: none; /* Disable interaction */
+  filter: grayscale(100%); /* Greyscale effect */
 }
 
