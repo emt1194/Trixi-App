@@ -120,3 +120,9 @@ body {
     display: none;
   }
 
+@media screen and (max-device-width: 480px) and (orientation: portrait) {
+  .gradient-border-button {
+    white-space: nowrap;
+    font-size: 0.95rem; /* optional tweak to help fit smaller screens */
+  }
+}
