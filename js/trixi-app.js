@@ -36,24 +36,48 @@ function truncateAddress(addr) {
           trixiBalance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
         }
   
-        // Display wallet info
-        addressDisplay.innerHTML = `
-          <div class="text-sm text-right w-full">
-            <div>
-              <span class="text-gray-400">Wallet Address:</span>
-              <span class="text-white ml-1">${truncateAddress(walletAddress)}</span>
-            </div>
-            <div class="flex justify-end gap-6 mt-1 text-sm">
-              <div>
-                <span class="text-gray-400">$SOL:</span><span class="text-[#00FFA3] ml-1">${solBalance.toFixed(4)}</span>
-           <span class="text-gray-400 ml-2">$TRIXI:</span><span class="text-[#00FFA3] ml-1 trixi-balance" id="trixi-balance">${trixiBalance.toFixed(2)}</span>
-               <span class="text-gray-400 ml-2">$USD:</span><span class="text-[#00FFA3] ml-1" id="trixi-usd"></span></div>
-              </div>
-            </div>
-          </div>
-        `;
+// Display wallet info - Old, working
+addressDisplay.innerHTML = `
+  <div class="wallet-info-panel">
+    <div class="text-sm text-right w-full">
+      <div>
+        <span class="text-gray-400">Wallet Address:</span>
+        <span class="text-white ml-1">${truncateAddress(walletAddress)}</span>
+      </div>
+      <div class="flex justify-end gap-6 mt-1 text-sm">
+        <div>
+          <span class="text-gray-400">$SOL:</span>
+          <span class="text-[#00FFA3] ml-1">${solBalance.toFixed(4)}</span>
+          <span class="text-gray-400 ml-2">$TRIXI:</span>
+          <span class="text-[#00FFA3] ml-1 trixi-balance" id="trixi-balance">${trixiBalance.toFixed(2)}</span>
+          <span class="text-gray-400 ml-2">$USD:</span>
+          <span class="text-[#00FFA3] ml-1" id="trixi-usd"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+
+setTimeout(() => {
+    const wrapper = document.getElementById("wallet-panel-wrapper");
+    if (wrapper) {
+      // Reset the class to force reanimation
+      wrapper.classList.remove("visible");
+  
+      // Force reflow (browser flushes styles)
+      void wrapper.offsetWidth;
+  
+      // Re-add class to trigger animation
+      wrapper.classList.add("visible");
+    }
+  }, 1000);
+  
+  
+  
+
 
         document.getElementById('trixi1').innerText = `${trixiBalance.toFixed(2)}`;
+        
 
       } else {
         alert("Phantom wallet not found. Please install it: https://phantom.app/");
@@ -223,28 +247,39 @@ function multiplyAndDisplay() {
 
 // Function to check if the wallet is connected and reapply panel-inactive if disconnected
 function checkWalletConnection() {
-    const primaryPanel = document.getElementById('primary-panel'); // Get the primary-panel element
+  const primaryPanel = document.getElementById('primary-panel');
+  const inactiveText = primaryPanel.querySelector('.panel-message-inactive');
+  const activeText = primaryPanel.querySelector('.panel-message-active');
+  const trixiUsd = document.getElementById('trixi-usd');
 
-    // Check if the wallet is connected
-    if (window.solana && window.solana.isPhantom) {
-        if (window.solana.isConnected) {
-            // If wallet is connected, perform the calculation
-            multiplyAndDisplay();
-        } else {
-            // If wallet is disconnected, reapply panel-inactive
-            primaryPanel.classList.add('panel-inactive');
-            document.getElementById('trixi-usd').innerText = "Please connect wallet";
-        }
+  const setPanelState = (isConnected) => {
+    if (isConnected) {
+      primaryPanel.classList.remove('panel-inactive');
+      inactiveText.classList.add('hidden');
+      activeText.classList.remove('hidden');
     } else {
-        // If Phantom is not available (wallet disconnected or not installed), reapply panel-inactive
-        primaryPanel.classList.add('panel-inactive');
-        document.getElementById('trixi-usd').innerText = "Please connect wallet";
+      primaryPanel.classList.add('panel-inactive');
+      trixiUsd.innerText = "Please connect wallet";
+      inactiveText.classList.remove('hidden');
+      activeText.classList.add('hidden');
     }
+  };
+
+  if (window.solana && window.solana.isPhantom) {
+    setPanelState(window.solana.isConnected);
+  } else {
+    setPanelState(false);
+  }
 }
+
+  
+  
 
 // Refresh the check every 500ms
 setInterval(function() {
     checkWalletConnection();  // Check wallet connection and update the panel accordingly
     multiplyAndDisplay(); // Perform multiplication and display result
 }, 500);
+
+
 
