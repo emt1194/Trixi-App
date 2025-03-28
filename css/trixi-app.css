@@ -180,16 +180,29 @@ body {
   margin-top:0px;
 }
 
-/* Inactive panel styles (grayscale, 50% opacity, non-clickable) */
-.panel-inactive {
-  margin-top:-70px!important;
-  opacity: 0.5;
-  pointer-events: none; /* Disable interaction */
-  filter: grayscale(100%); /* Greyscale effect */
-  transition: height 0.25s ease-in-out;
-  height:160px!important;
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
+.hide-scrollbar {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+
+/* === Panels CSS (Final, Fade-In Version) === */
+
+/* Panel 1 inactive state */
+.panel-inactive {
+  margin-top: -70px !important;
+  opacity: 0.5;
+  pointer-events: none;
+  filter: grayscale(100%);
+  transition: height 0.25s ease-in-out;
+  height: 160px !important;
+}
+
+/* Wallet panel fade-in */
 #wallet-panel-wrapper {
   opacity: 0;
   transition: opacity 150ms linear;
@@ -200,75 +213,219 @@ body {
   opacity: 1;
 }
 
+/* Toggle message visibility */
 #primary-panel .panel-message-inactive {
   display: none;
 }
-
 #primary-panel.panel-inactive .panel-message-inactive {
   display: inline;
 }
-
 #primary-panel .panel-message-active {
   display: inline;
 }
-
 #primary-panel.panel-inactive .panel-message-active {
   display: none;
 }
 
-/* Start hidden + offscreen */
-.panel-left,
-.panel-right {
+/* === Panel Fade Animation === */
+
+/* Base fade state for all panels */
+.info-panel {
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transform: translateX(0);
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  transition: opacity 0.4s ease, visibility 0s linear 0.4s;
 }
 
-/* Panel 2 flies in from the left */
-#primary-panel:not(.panel-inactive) ~ #info-panels-wrapper .panel-left {
-  transform: translateX(0);
+/* Panel 2 */
+.fade-delay-0 {
+  transition-delay: 0ms;
+}
+#primary-panel:not(.panel-inactive) ~ #info-panels-wrapper .fade-delay-0 {
   opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition-delay: 0ms;
+}
+#primary-panel.panel-inactive ~ #info-panels-wrapper .fade-delay-0 {
+  opacity: 0;
+  visibility: hidden;
+  transition-delay: 500ms;
+}
+
+/* Panel 3 */
+.fade-delay-1 {
+  transition-delay: 250ms;
+}
+#primary-panel:not(.panel-inactive) ~ #info-panels-wrapper .fade-delay-1 {
+  opacity: 1;
+  visibility: visible;
   pointer-events: auto;
   transition-delay: 250ms;
 }
+#primary-panel.panel-inactive ~ #info-panels-wrapper .fade-delay-1 {
+  opacity: 0;
+  visibility: hidden;
+  transition-delay: 250ms;
+}
 
-/* Panel 3 flies in from the right */
-#primary-panel:not(.panel-inactive) ~ #info-panels-wrapper .panel-right {
-  transform: translateX(0);
+/* Panel 4 */
+.fade-delay-2 {
+  transition-delay: 500ms;
+}
+#primary-panel:not(.panel-inactive) ~ #info-panels-wrapper .fade-delay-2 {
   opacity: 1;
+  visibility: visible;
   pointer-events: auto;
-  transition-delay: 350ms;
+  transition-delay: 500ms;
 }
-
-/* When inactive, move panels off-screen again */
-#primary-panel.panel-inactive ~ #info-panels-wrapper .panel-left {
-  transform: translateX(-100%);
+#primary-panel.panel-inactive ~ #info-panels-wrapper .fade-delay-2 {
   opacity: 0;
+  visibility: hidden;
+  transition-delay: 0ms;
 }
 
-#primary-panel.panel-inactive ~ #info-panels-wrapper .panel-right {
-  transform: translateX(100%);
-  opacity: 0;
+/* === End Panels CSS === */
+
+
+/* Radar css */
+.radar-mini {
+  position: relative;
+  width: 144px; /* was 160px */
+  height: 144px;
+  padding: 0;
+  border-radius: 50%;
+  background: #000;
+  box-shadow: inset 0 0 36px rgba(0, 255, 0, 0.4); /* was 40px */
+  overflow: hidden;
+  z-index: 1;
+
+  /* Solana gradient ring */
+  border: 3.6px solid transparent; /* was 4px */
+  background-image:
+    linear-gradient(#000, #000),
+    linear-gradient(90deg, #00FFA3, #03E1FF, #DC1FFF);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
 }
 
-.background-video {
+.radar-mini::before,
+.radar-mini::after {
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
+  width: 5.4px;  /* was 6px */
+  height: 5.4px;
+  background: #DC1FFF;
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: glow 1s linear infinite;
+  z-index: 2;
+}
+
+.radar-mini::before {
+  top: 70%;
+  left: 55%;
+}
+
+.radar-mini::after {
+  top: 55%;
+  left: 40%;
+}
+
+.radar-mini li:nth-child(1),
+.radar-mini li:nth-child(2),
+.radar-mini li:nth-child(3),
+.radar-mini li:nth-child(4) {
+  list-style: none;
+  position: absolute;
+  top: 50%;
+  height: 1px;
   width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensures the video covers the entire container */
-  z-index: -1; /* Ensures the video stays in the background */
-  border-radius: 1rem; 
+  background: #00FFA3;
+  z-index: 2;
 }
 
-
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+.radar-mini li:nth-child(2) {
+  transform: rotate(90deg);
 }
 
-.hide-scrollbar {
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+.radar-mini li:nth-child(3) {
+  transform: rotate(45deg);
+}
+
+.radar-mini li:nth-child(4) {
+  transform: rotate(-45deg);
+}
+
+.radar-mini li:nth-child(5),
+.radar-mini li:nth-child(6),
+.radar-mini li:nth-child(7) {
+  list-style: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 0.9px solid #00FFA3;
+  background: transparent;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.radar-mini li:nth-child(5) {
+  width: 36px;  /* was 40px */
+  height: 36px;
+}
+
+.radar-mini li:nth-child(6) {
+  width: 72px;
+  height: 72px;
+}
+
+.radar-mini li:nth-child(7) {
+  width: 108px;
+  height: 108px;
+}
+
+.radar-mini li:nth-child(8) {
+  list-style: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 90px;  /* was 100px */
+  height: 90px;
+  transform-origin: top left;
+  background: linear-gradient(45deg, #00ff00 0%, transparent 50%);
+  animation: animate 2s linear infinite;
+  z-index: 1;
+}
+
+/* Animations */
+@keyframes animate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0; }
+  50%      { opacity: 1; }
+}
+
+.radar-label {
+  margin-top: 8px;
+  font-size: 0.75rem; /* small text */
+  color: #00FF7F; /* Solana green */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Consolas', monospace;
+  filter: drop-shadow(0 0 5px #00FF7F);
+}
+
+/* Blinking underscore */
+.blinker {
+  animation: blink-cursor 0.8s steps(1) infinite;
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 0; }
+  50%     { opacity: 1; }
 }
