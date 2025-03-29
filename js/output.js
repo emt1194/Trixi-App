@@ -75,14 +75,3 @@ const textLines = [
 	typeNextLine();
   };
   
-  const primaryPanel = document.getElementById("primary-panel");
-const video = document.getElementById("trixi-video");
-
-const activateVideo = () => {
-  if (!primaryPanel.classList.contains("panel-inactive")) {
-    video.classList.remove("hidden");
-    video.muted = true;
-    video.autoplay = true;
-    video.play().catch(() => {}); // avoid autoplay errors
-  }
-};
