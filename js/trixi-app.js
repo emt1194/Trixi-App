@@ -303,7 +303,7 @@ function getRandomHash(length = 12) {
 }
 
 function updateFingerprintHash() {
-  fingerprintText.textContent = "scanning: " + getRandomHash();
+  fingerprintText.textContent = "analyzing: " + getRandomHash();
 }
 
 // Update every 200ms for a fast flicker effect
