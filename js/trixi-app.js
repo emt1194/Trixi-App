@@ -76,9 +76,25 @@ async function connectSolanaWallet() {
         document.getElementById('trixi1').innerText = `${trixiBalance.toFixed(2)}`;
 
 
-     } else {
-        alert("Phantom wallet not found. Please install it: https://phantom.app/");
-     }
+      } else {
+         const warning = document.getElementById("phantom-warning-float");
+         const btn = document.querySelector(".solana-button");
+      
+         if (warning && btn) {
+            const rect = btn.getBoundingClientRect();
+      
+            // Position the floating element near the button
+            warning.style.top = `${rect.bottom + window.scrollY + 8}px`;
+            warning.style.left = `${rect.right - warning.offsetWidth}px`;
+            warning.classList.remove("hidden");
+      
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+               warning.classList.add("hidden");
+            }, 5000);
+         }
+      }
+      
   } catch (err) {
      console.error("Wallet connection or RPC call failed:", err);
      document.getElementById('wallet-address-display').innerHTML += "<br>⚠️ Error fetching balances.";
@@ -308,3 +324,18 @@ function updateFingerprintHash() {
 
 // Update every 200ms for a fast flicker effect
 setInterval(updateFingerprintHash, 200);
+
+// Modal js
+
+
+  window.addEventListener('DOMContentLoaded', () => {
+    // Only show once per session (optional)
+    if (!sessionStorage.getItem('modalShown')) {
+      document.getElementById('welcome-modal').style.display = 'flex';
+      sessionStorage.setItem('modalShown', 'true');
+    }
+  });
+
+  function closeModal() {
+    document.getElementById('welcome-modal').style.display = 'none';
+  }

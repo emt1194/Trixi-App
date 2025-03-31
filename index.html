@@ -68,7 +68,16 @@
                </div>
             </div>
             <!-- Connect Wallet Button -->
-            <button onclick="connectSolanaWallet()" class="solana-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl gradient-border-button transition">Connect Wallet</button>
+  <div class="relative z-[1000] z-1000">
+   <button onclick="connectSolanaWallet()" class="solana-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl gradient-border-button transition">
+     Connect Wallet
+   </button>
+   <div id="phantom-warning" class="hidden absolute right-0 mt-2 bg-[#1C1E26] text-white border border-[#DC1FFF] rounded-xl shadow-lg px-4 py-3 w-64 z-50 text-sm">
+     Phantom wallet not found.<br />
+     <a href="https://phantom.app/" target="_blank" class="text-[#03E1FF] underline hover:text-white transition">Install Phantom</a>
+   </div>
+ </div>
+
          </div>
       </header>
       <div class="w-full flex justify-end max-w-[1200px] px-6 mt-0 mx-auto">
@@ -189,6 +198,40 @@
             </div>
          </div>
       </footer>
+
+
+<!-- Modal -->
+<div id="welcome-modal" class="fixed inset-0 z-[999] flex items-center justify-center bg-black/60">
+   <div class="bg-[#1C1E26] rounded-2xl p-6 max-w-md w-full mx-4 text-white text-center shadow-lg border border-[#2B2D36]">
+     
+     <h2 class="text-2xl font-semibold mb-4 bg-gradient-to-r from-[#00FFA3] via-[#03E1FF] to-[#DC1FFF] text-transparent bg-clip-text">
+       Welcome to TrixiAI
+     </h2>
+     <p class="mb-6 text-sm text-gray-300">
+       This is an early UI prototype of TrixiAI. You can currently connect your wallet and view your balance, but many features are deep in testing, and newer features are in development. We're working fast — expect powerful tools like sentiment analysis, live alerts, and trade signals to roll out shortly.
+     </p>
+     <div class="flex flex-col sm:flex-row gap-3 justify-center">
+       <button onclick="closeModal()" class="bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl">
+         OK
+       </button>
+       <a href="https://trixiai.net/#tools" target="_blank" rel="noopener noreferrer"
+          class="bg-gradient-to-r from-[#00FFA3] via-[#03E1FF] to-[#DC1FFF] text-white font-semibold px-4 py-2 rounded-xl hover:opacity-90 transition">
+         Explore Tools
+       </a>
+     </div>
+   </div>
+ </div>
+
+<!-- Phantom Warning -->
+<div id="phantom-warning-float" class="hidden fixed z-[1000] bg-[#1C1E26] text-white border border-[#DC1FFF] rounded-xl shadow-lg px-4 py-3 w-64 text-sm">
+   Phantom wallet not found.<br />
+   <a href="https://phantom.app/" target="_blank" class="text-[#03E1FF] underline hover:text-white transition">
+     Install Phantom
+   </a>
+ </div>
+ 
+ 
+
       <script src="./js/output.js"></script>
    </body>
 </html>
