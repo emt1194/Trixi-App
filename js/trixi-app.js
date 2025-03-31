@@ -339,3 +339,18 @@ setInterval(updateFingerprintHash, 200);
   function closeModal() {
     document.getElementById('welcome-modal').style.display = 'none';
   }
+
+
+  document.addEventListener("click", (e) => {
+   const warning = document.getElementById("phantom-warning-float");
+ 
+   // Skip if it's not showing
+   if (warning.classList.contains("hidden")) return;
+ 
+   // Check if the click was outside the warning and the connect button
+   const connectBtn = document.querySelector(".solana-button");
+   if (!warning.contains(e.target) && !connectBtn.contains(e.target)) {
+     warning.classList.add("hidden");
+   }
+ });
+ 
