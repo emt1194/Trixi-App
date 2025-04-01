@@ -338,6 +338,7 @@ setInterval(updateFingerprintHash, 200);
 
   function closeModal() {
     document.getElementById('welcome-modal').style.display = 'none';
+    if (modal) modal.style.display = 'none';
   }
 
 
