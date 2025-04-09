@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trixi WebUI alpha</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #0e0e11;
+      color: white;
+      padding: 2rem;
+    }
+    .command-box {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+    }
+    input {
+      width: 100%;
+      padding: 1rem;
+      font-size: 1.2rem;
+      border-radius: 8px;
+      border: none;
+      background: #1a1a1d;
+      color: white;
+      outline: none;
+    }
+    .dropdown {
+      position: absolute;
+      background: #1a1a1d;
+      border: 1px solid #333;
+      border-radius: 6px;
+      margin-top: 4px;
+      width: 100%;
+      z-index: 1000;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .dropdown div {
+      padding: 0.75rem 1rem;
+      cursor: pointer;
+    }
+    .dropdown div:hover {
+      background: #333;
+    }
+    .description {
+      color: #999;
+      font-size: 0.85rem;
+      margin-left: 8px;
+    }
+    .output {
+      margin-top: 2rem;
+      background: #141417;
+      padding: 1rem;
+      border-radius: 8px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Trixi WebUI</h1>
+  <div class="command-box">
+    <input type="text" id="commandInput" placeholder="Type / to see available commands" autocomplete="off" />
+    <div class="dropdown" id="dropdown" style="display: none;"></div>
+  </div>
+  <div class="output" id="outputBox">Command output will appear here...</div>
+
+  <script>
+    const commands = [
+      { cmd: "/followers", desc: "List followers of a Twitter profile" },
+      { cmd: "/following", desc: "List who the profile is following" },
+      { cmd: "/latest", desc: "Fetch latest tweets" },
+      { cmd: "/analyze", desc: "Analyze profile activity" },
+      { cmd: "/verified", desc: "Show verified followers" },
+      { cmd: "/trending", desc: "Show current trending topics" },
+      { cmd: "/ama", desc: "Start an AMA-style session" },
+    ];
+
+    const input = document.getElementById("commandInput");
+    const dropdown = document.getElementById("dropdown");
+    const output = document.getElementById("outputBox");
+
+    input.addEventListener("input", () => {
+      const value = input.value.trim().toLowerCase();
+      if (!value.startsWith("/")) {
+        dropdown.style.display = "none";
+        return;
+      }
+
+      const matches = commands.filter(c => c.cmd.startsWith(value));
+      if (matches.length > 0) {
+        dropdown.innerHTML = "";
+        matches.forEach(c => {
+          const div = document.createElement("div");
+          div.innerHTML = `<strong>${c.cmd}</strong><span class="description">${c.desc}</span>`;
+          div.onclick = () => {
+            input.value = c.cmd;
+            dropdown.style.display = "none";
+            sendCommand(c.cmd);
+          };
+          dropdown.appendChild(div);
+        });
+        dropdown.style.display = "block";
+      } else {
+        dropdown.style.display = "none";
+      }
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        dropdown.style.display = "none";
+        sendCommand(input.value.trim());
+      }
+    });
+
+    function sendCommand(command) {
+      output.textContent = "Sending command...";
+      fetch("http://150.136.231.74:3000/command", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ command })
+      })
+      .then(res => res.json())
+      .then(data => {
+        output.textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(err => {
+        output.textContent = "Error: " + err.message;
+      });
+    }
+  </script>
+</body>
+</html>
