@@ -9,7 +9,7 @@
   </style>
 </head>
 <body>
-  <h1>🔍 API Probe</h1>
+  <h1>Trixi API Probe</h1>
   <p>Trying to reach: <code>http://150.136.231.74:3000/</code></p>
   <div id="log">Checking...</div>
 
@@ -22,9 +22,9 @@
           mode: 'cors',
         });
         const text = await res.text();
-        log.textContent = `✅ Response status: ${res.status}\n\n${text}`;
+        log.textContent = `Response status: ${res.status}\n\n${text}`;
       } catch (err) {
-        log.textContent = `❌ Failed to connect.\n\n${err}`;
+        log.textContent = `Failed to connect.\n\n${err}`;
       }
     }
 
