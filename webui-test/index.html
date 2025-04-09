@@ -2,33 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>API Probe</title>
+  <title>Trixi API Test</title>
   <style>
-    body { font-family: sans-serif; padding: 2rem; }
-    #log { white-space: pre-wrap; background: #f0f0f0; padding: 1rem; border-radius: 8px; }
+    body { font-family: monospace; background: #f9f9f9; padding: 2rem; }
+    h1 { margin-bottom: 1rem; }
+    .log { background: #fff; padding: 1rem; border: 1px solid #ccc; border-radius: 8px; white-space: pre-wrap; }
+    .success { color: green; }
+    .fail { color: red; }
   </style>
 </head>
 <body>
-  <h1>Trixi API Probe</h1>
-  <p>Trying to reach: <code>http://150.136.231.74:442/</code></p>
-  <div id="log">Checking...</div>
+  <h1>Trixi API Test</h1>
+  <div class="log" id="log">Running probe...</div>
 
   <script>
-    async function probeAPI() {
-      const log = document.getElementById('log');
+    const BASE_IP = '150.136.231.74';
+    const SCHEMES = ['http', 'https'];
+    const PATHS = ['/', '/ping', '/status', '/health', '/api', '/api/status', '/api/health'];
+
+    const logEl = document.getElementById('log');
+
+    function logLine(text, success = null) {
+      const span = document.createElement('div');
+      span.textContent = text;
+      if (success === true) span.classList.add('success');
+      if (success === false) span.classList.add('fail');
+      logEl.appendChild(span);
+    }
+
+    async function tryRequest(url) {
       try {
-        const res = await fetch('http://150.136.231.74:443/', {
-          method: 'GET',
-          mode: 'cors',
-        });
-        const text = await res.text();
-        log.textContent = `Response status: ${res.status}\n\n${text}`;
+        const res = await fetch(url, { method: 'GET', mode: 'cors' });
+        const body = await res.text();
+        logLine(`✅ ${url} → ${res.status}\n${body}`, true);
       } catch (err) {
-        log.textContent = `Failed to connect.\n\n${err}`;
+        logLine(`❌ ${url} → ${err.message}`, false);
       }
     }
 
-    probeAPI();
+    async function runProbes() {
+      for (const scheme of SCHEMES) {
+        for (const path of PATHS) {
+          const url = `${scheme}://${BASE_IP}${path}`;
+          await tryRequest(url);
+        }
+      }
+    }
+
+    runProbes();
   </script>
 </body>
 </html>
