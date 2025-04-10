@@ -12,13 +12,12 @@
   </style>
 </head>
 <body>
-  <h1>Trixi API Test</h1>
-  <div class="log" id="log">Running probe...</div>
+  <h1>🔍 Trixi API Test</h1>
+  <div class="log" id="log">Sending request to <code>https://api.trixiai.net/api/</code>...</div>
 
   <script>
-    const BASE_IP = '150.136.231.74';
-    const SCHEMES = ['http', 'https'];
-    const PATHS = ['/', '/ping', '/status', '/health', '/api', '/api/status', '/api/health'];
+    const API_URL = 'https://api.trixiai.net/api/';
+    const API_KEY = '900d57a61c155c9253b684e21738b721651d2c1e3b5c0d479224a79e944ea246';
 
     const logEl = document.getElementById('log');
 
@@ -30,26 +29,29 @@
       logEl.appendChild(span);
     }
 
-    async function tryRequest(url) {
+    async function runTest() {
       try {
-        const res = await fetch(url, { method: 'GET', mode: 'cors' });
-        const body = await res.text();
-        logLine(`✅ ${url} → ${res.status}\n${body}`, true);
-      } catch (err) {
-        logLine(`❌ ${url} → ${err.message}`, false);
-      }
-    }
+        const response = await fetch(API_URL, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json'
+          },
+        });
 
-    async function runProbes() {
-      for (const scheme of SCHEMES) {
-        for (const path of PATHS) {
-          const url = `${scheme}://${BASE_IP}${path}`;
-          await tryRequest(url);
+        const text = await response.text();
+
+        if (response.ok) {
+          logLine(`✅ ${API_URL} → ${response.status} OK\n\n${text}`, true);
+        } else {
+          logLine(`❌ ${API_URL} → ${response.status}\n\n${text}`, false);
         }
+      } catch (err) {
+        logLine(`❌ ${API_URL} → Network or CORS Error: ${err.message}`, false);
       }
     }
 
-    runProbes();
+    runTest();
   </script>
 </body>
 </html>
