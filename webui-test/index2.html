@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+     
+      <meta charset="utf-8" />
+      <title>TrixiAI | The Ultimate AI Trench Assistant for Traders & Analysts</title>
+      <!-- Meta Tags -->
+      <meta name="description" content="TrixiAI is a next-gen trading assistant delivering real-time sentiment analysis, market insights, and AI-generated content. Track trends, manage risk, and stay ahead with smart tools powered by Gen Z-adapted language and multi-platform intelligence.">
+      <meta name="keywords" content="TrixiAI, AI trading assistant, sentiment analysis, crypto insights, natural language trading, financial AI, Telegram trading bot, X market sentiment, social media analytics, meme finance, Gen Z trading, risk-aware AI">
+      <meta property="og:type" content="website">
+      <meta property="og:url" content="https://www.trixiai.net/">
+      <meta property="og:title" content="TrixiAI – AI-Powered Sentiment Analysis & Trading Assistant">
+      <meta property="og:description" content="TrixiAI">
+      <meta property="og:image" content="https://www.trixiai.net/images/trixi-preview.png">
+      <meta property="twitter:card" content="summary_large_image">
+      <meta property="twitter:title" content="TrixiAI App">
+      <meta property="twitter:description" content="The ultimate AI-powered assistant for traders.">
+      <meta property="twitter:image" content="https://www.trixiai.net/images/trixi-preview.png">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="theme-color" content="#121212">
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+      <!-- Fonts & Tailwind -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script src="https://unpkg.com/@solana/web3.js@1.33.0/lib/index.iife.js"></script>
+      <!-- Trixi Styles -->
+      <link href="./css/trixi-app.css" rel="stylesheet" type="text/css" />
+      <link href="./css/analyze.css" rel="stylesheet" type="text/css" />
+      <!-- Trixi JS-->
+      <script src="./js/trixi-app.js" defer></script>
+   </head>
+   <body class="text-white min-h-screen flex flex-col items-center relative">
+      <!-- Background Noise Layer -->
+      <div class="noise-background"></div>
+      <!-- Top bar -->
+      <header class="w-full max-w-[1200px] flex items-center justify-between px-6 py-4 bg-[#0D0E12] relative z-10">
+        <a href="https://app.trixiai.net"><div class="max-w-[200px] logo">
+            <img src="./img/trixi-logo.png" alt="Trixi Logo" class="w-full h-auto">
+         </div></a>
+         <div class="space-x-4 buttons-area">
+            <div class="relative">
+
+               <button id="settings-btn" class="inactive-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-2 py-2 rounded-xl transition">
+                  <span class="settings-text">Settings</span>
+                  <div class="settings-icon-container">
+                     <svg width="30px" height="30px" viewBox="0 0 25 25" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.2624 5.40607L13.8714 4.42848C13.6471 3.86771 13.104 3.5 12.5 3.5C11.896 3.5 11.3529 3.86771 11.1286 4.42848L10.7376 5.40607C10.5857 5.78585 10.2869 6.08826 9.90901 6.2448C9.53111 6.40133 9.10603 6.39874 8.73006 6.23761L7.76229 5.82285C7.20716 5.58494 6.56311 5.70897 6.13604 6.13604C5.70897 6.56311 5.58494 7.20716 5.82285 7.76229L6.23761 8.73006C6.39874 9.10602 6.40133 9.53111 6.2448 9.90901C6.08826 10.2869 5.78585 10.5857 5.40607 10.7376L4.42848 11.1286C3.86771 11.3529 3.5 11.896 3.5 12.5C3.5 13.104 3.86771 13.6471 4.42848 13.8714L5.40607 14.2624C5.78585 14.4143 6.08826 14.7131 6.2448 15.091C6.40133 15.4689 6.39874 15.894 6.23761 16.2699L5.82285 17.2377C5.58494 17.7928 5.70897 18.4369 6.13604 18.864C6.56311 19.291 7.20716 19.4151 7.76229 19.1772L8.73006 18.7624C9.10603 18.6013 9.53111 18.5987 9.90901 18.7552C10.2869 18.9117 10.5857 19.2141 10.7376 19.5939L11.1286 20.5715C11.3529 21.1323 11.896 21.5 12.5 21.5C13.104 21.5 13.6471 21.1323 13.8714 20.5715L14.2624 19.5939C14.4143 19.2141 14.7131 18.9117 15.091 18.7552C15.4689 18.5987 15.894 18.6013 16.2699 18.7624L17.2377 19.1771C17.7928 19.4151 18.4369 19.291 18.864 18.864C19.291 18.4369 19.4151 17.7928 19.1771 17.2377L18.7624 16.2699C18.6013 15.894 18.5987 15.4689 18.7552 15.091C18.9117 14.7131 19.2141 14.4143 19.5939 14.2624L20.5715 13.8714C21.1323 13.6471 21.5 13.104 21.5 12.5C21.5 11.896 21.1323 11.3529 20.5715 11.1286L19.5939 10.7376C19.2141 10.5857 18.9117 10.2869 18.7552 9.90901C18.5987 9.53111 18.6013 9.10602 18.7624 8.73006L19.1772 7.76229C19.4151 7.20716 19.291 6.56311 18.864 6.13604C18.4369 5.70897 17.7928 5.58494 17.2377 5.82285L16.2699 6.23761C15.894 6.39874 15.4689 6.40133 15.091 6.2448C14.7131 6.08826 14.4143 5.78585 14.2624 5.40607Z" stroke="#121923" stroke-width="1.2"/>
+                        <path d="M16.5 12.5C16.5 14.7091 14.7091 16.5 12.5 16.5C10.2909 16.5 8.5 14.7091 8.5 12.5C8.5 10.2909 10.2909 8.5 12.5 8.5C14.7091 8.5 16.5 10.2909 16.5 12.5Z" stroke="#121923" stroke-width="1.2"/>
+                     </svg>
+                  </div>
+               </button>
+
+               <div id="settings-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-[#1C1E26] text-white rounded-xl shadow-lg border border-[#2B2D36] z-50">
+                  <button id="disconnect-wallet" class="w-full text-left px-4 py-2 hover:bg-[#2B2D36] rounded-b-xl rounded-t-xl">
+                  Disconnect Wallet
+                  </button>
+               </div>
+            </div>
+
+  <div class="relative z-[1000] z-1000">
+   <button onclick="connectSolanaWallet()" class="inactive-button solana-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl gradient-border-button transition">
+     Connect Wallet
+   </button>
+   <div id="phantom-warning" class="hidden absolute right-0 mt-2 bg-[#1C1E26] text-white border border-[#DC1FFF] rounded-xl shadow-lg px-4 py-3 w-64 z-50 text-sm">
+     Phantom wallet not found.<br />
+     <a href="https://phantom.app/" target="_blank" class="text-[#03E1FF] underline hover:text-white transition">Install Phantom</a>
+   </div>
+ </div>
+
+         </div>
+      </header>
+
+      <main class="w-full max-w-[1200px] px-6 flex flex-col gap-6 flex-1 relative z-10">
+
+        <div class="bg-[#1C1E26] relative z-20 w-full rounded-2xl overflow-hidden primary-panel transition-all p-12 duration-700 ease-in-out panel-inactive">
+          <div id="primary-panel" class="w-full h-auto min-h-640px flex flex-col items-center relative space-y-4 bg-[#1C1E26] primary-panel">
+      
+            <input type="text" id="username"  placeholder="Enter username (e.g. TangledLotus1)" class="w-full p-2 pl-4 border border-gray-700 bg-[#1C1E26] text-white  rounded-xl "/>
+
+            <div class="w-full flex items-start gap-2">
+
+              <div class="relative flex-grow">
+                <input
+                  type="text"
+                  id="command"
+                  placeholder="Type a /command"
+                  class="w-full pl-4 p-2 border border-gray-700 bg-[#1C1E26] text-white rounded-xl pr-20"
+                  autocomplete="off"
+                />
+
+                <button id="enterBtn" class="absolute right-10 top-1/2 transform -translate-y-1/2 hidden" title="Run">
+                  <img src="./img/enter.svg" alt="Enter" class="w-4 h-4 opacity-60 hover:opacity-90" />
+                </button>
+      
+                <button id="clearBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 hidden" title="Clear">
+                  <img src="./img/x.svg" alt="Clear" class="w-4 h-4 opacity-80 hover:opacity-100" />
+                </button>
+      
+                <div id="commandDropdown" class="absolute max-w-sm left-0 right-0 bg-[#262931] border border-gray-700 rounded shadow mt-1 hidden z-10 text-white transition-all duration-300 origin-top transform scale-y-0 opacity-0"></div>
+              </div>
+      
+              <button id="runBtn" class="solana-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl gradient-border-button transition">Run</button>
+            </div>
+      
+            <textarea
+              id="aiInput"
+              placeholder="Ask something..."
+              class="w-full p-2 border border-gray-700 bg-[#1C1E26] text-white rounded hidden">
+            </textarea>
+      
+            <div id="output" class="mt-4 space-y-4 w-full"></div>
+          </div>
+        </div>
+        
+      </main>
+
+      <footer class="w-full mt-20 bg-[#1C1E26] text-white">
+         <div class="max-w-[1200px] mx-auto px-6 py-12 flex flex-row flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center">
+               <a href="https://app.trixiai.net"><img src="./img/trixi-logo.png" alt="Trixi Logo" class="w-[150px] h-auto"></a>
+            </div>
+            <div class="text-gray-500 text-sm flex flex-wrap items-center gap-4">
+               <a href="https://t.me/TrixiVerse" target="_blank"
+                  class="hover:text-white hover:underline transition">
+               Telegram
+               </a>
+               <a href="https://discord.gg/cY5ETJtnT6" target="_blank"
+                  class="hover:text-white hover:underline transition">
+               Discord
+               </a>
+               <span>© 2025 TrixiVerse.</span>
+            </div>
+         </div>
+      </footer>
+
+      <script src="./js/format.js"></script>
+      <script src="./js/api.js"></script>
+      <script src="./js/input.js"></script>
+    
+   </body>
+</html>

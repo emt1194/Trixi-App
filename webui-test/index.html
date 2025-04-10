@@ -1,74 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Trixi API Test Web App</title>
-  <style>
-    body { font-family: Arial, sans-serif; padding: 2rem; background: #f9f9f9; }
-    input, button { padding: 0.5rem; font-size: 1rem; margin-right: 0.5rem; }
-    #output { white-space: pre-wrap; background: #fff; padding: 1rem; border: 1px solid #ccc; border-radius: 6px; margin-top: 1rem; }
-    label { display: block; margin-top: 1rem; }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Trixi API Test</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./css/analyze.css">
+
 </head>
-<body>
-  <h1>Trixi API Test Web App</h1>
+<body class="text-white min-h-screen flex flex-col items-center relative bg-[#0F1014] px-4 py-6">
+  <div class="max-w-2xl w-full space-y-4">
+    <h1 class="text-2xl font-semibold text-white">Trixi API Test</h1>
 
-  <label>
-    Twitter Username:
-    <input type="text" id="username" placeholder="e.g. elonmusk" />
-  </label>
+    <input
+      type="text"
+      id="username"
+      placeholder="Enter username (e.g. TangledLotus1)"
+      class="w-full p-2 border border-gray-700 bg-[#1C1E26] text-white rounded"
+    />
 
-  <button onclick="fetchProfile()">Fetch Profile</button>
-  <button onclick="fetchTweets()">Fetch Tweets</button>
-  <button onclick="analyzeProfile()">Analyze Profile</button>
-  <button onclick="fetchUsage()">Check API Usage</button>
+    <div class="relative w-full">
+      <input
+        type="text"
+        id="command"
+        placeholder="Type /command or question..."
+        class="w-full p-2 border border-gray-700 bg-[#1C1E26] text-white rounded pr-20"
+        autocomplete="off"
+      />
 
-  <div id="output">Results will appear here...</div>
+	  
+	        <!-- Clear button (SVG) -->
+      <button id="enterBtn" class="absolute right-10 top-1/2 transform -translate-y-1/2 hidden" title="Run">
+	  <img src="./img/enter.svg" alt="Enter" class="w-4 h-4 opacity-60 hover:opacity-90" />
+      </button>
 
-  <script>
-    const API_KEY = '900d57a61c155c9253b684e21738b721651d2c1e3b5c0d479224a79e944ea246';
-    const BASE_URL = 'https://api.trixiai.net/api/social/profile';
+      <!-- Enter button (SVG) -->
+      <button id="clearBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 hidden" title="Clear">
+        <img src="./img/x.svg" alt="Clear" class="w-4 h-4 opacity-80 hover:opacity-100" />
+      </button>
+	  	  
 
-    function logOutput(text) {
-      document.getElementById('output').textContent = text;
-    }
+      <!-- Dropdown -->
+      <div id="commandDropdown" class="absolute left-0 right-0 bg-[#1C1E26] border border-gray-700 rounded shadow mt-1 hidden z-10 text-white"></div>
+    </div>
 
-    async function fetchFromAPI(endpoint) {
-      try {
-        const response = await fetch(endpoint, {
-          headers: {
-            'x-api-key': API_KEY,
-            'Content-Type': 'application/json'
-          }
-        });
-        const data = await response.text();
-        logOutput(`Status: ${response.status}\n\n${data}`);
-      } catch (err) {
-        logOutput(`Error: ${err.message}`);
-      }
-    }
+    <textarea
+      id="aiInput"
+      placeholder="Ask something..."
+      class="w-full p-2 border border-gray-700 bg-[#1C1E26] text-white rounded hidden"
+    ></textarea>
 
-    function fetchProfile() {
-      const username = document.getElementById('username').value.trim();
-      if (!username) return logOutput('Please enter a username.');
-      fetchFromAPI(`${BASE_URL}/${username}`);
-    }
+    <button id="runBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Run</button>
 
-    function fetchTweets() {
-      const username = document.getElementById('username').value.trim();
-      if (!username) return logOutput('Please enter a username.');
-      fetchFromAPI(`${BASE_URL}/${username}/tweets`);
-    }
+    <div id="output" class="mt-4 space-y-4"></div>
+  </div>
 
-    function analyzeProfile() {
-      const username = document.getElementById('username').value.trim();
-      if (!username) return logOutput('Please enter a username.');
-      fetchFromAPI(`${BASE_URL}/${username}/analyze`);
-    }
+  <script src="./js/format.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/input.js"></script>
 
-    function fetchUsage() {
-      fetchFromAPI('https://api.trixiai.net/api/social/usage');
-    }
-  </script>
+  
+
+
 </body>
 </html>
