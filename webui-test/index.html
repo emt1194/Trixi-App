@@ -1,57 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Trixi API Test</title>
+  <meta charset="UTF-8">
+  <title>Trixi API Test Web App</title>
   <style>
-    body { font-family: monospace; background: #f9f9f9; padding: 2rem; }
-    h1 { margin-bottom: 1rem; }
-    .log { background: #fff; padding: 1rem; border: 1px solid #ccc; border-radius: 8px; white-space: pre-wrap; }
-    .success { color: green; }
-    .fail { color: red; }
+    body { font-family: Arial, sans-serif; padding: 2rem; background: #f9f9f9; }
+    input, button { padding: 0.5rem; font-size: 1rem; margin-right: 0.5rem; }
+    #output { white-space: pre-wrap; background: #fff; padding: 1rem; border: 1px solid #ccc; border-radius: 6px; margin-top: 1rem; }
+    label { display: block; margin-top: 1rem; }
   </style>
 </head>
 <body>
-  <h1>🔍 Trixi API Test</h1>
-  <div class="log" id="log">Sending request to <code>https://api.trixiai.net/api/social/profile/test</code>...</div>
+  <h1>🔍 Trixi API Test Web App</h1>
+
+  <label>
+    Twitter Username:
+    <input type="text" id="username" placeholder="e.g. elonmusk" />
+  </label>
+
+  <button onclick="fetchProfile()">Fetch Profile</button>
+  <button onclick="fetchTweets()">Fetch Tweets</button>
+  <button onclick="analyzeProfile()">Analyze Profile</button>
+
+  <div id="output">Results will appear here...</div>
 
   <script>
-    const API_URL = 'https://api.trixiai.net/api/social/profile/test';
     const API_KEY = '900d57a61c155c9253b684e21738b721651d2c1e3b5c0d479224a79e944ea246';
+    const BASE_URL = 'https://api.trixiai.net/api/social/profile';
 
-    const logEl = document.getElementById('log');
-
-    function logLine(text, success = null) {
-      const span = document.createElement('div');
-      span.textContent = text;
-      if (success === true) span.classList.add('success');
-      if (success === false) span.classList.add('fail');
-      logEl.appendChild(span);
+    function logOutput(text) {
+      document.getElementById('output').textContent = text;
     }
 
-    async function runTest() {
+    async function fetchFromAPI(endpoint) {
       try {
-        const response = await fetch(API_URL, {
-          method: 'GET',
+        const response = await fetch(endpoint, {
           headers: {
-            'Authorization': `Bearer ${API_KEY}`,
+            'x-api-key': API_KEY,
             'Content-Type': 'application/json'
-          },
+          }
         });
-
-        const text = await response.text();
-
-        if (response.ok) {
-          logLine(`✅ ${API_URL} → ${response.status} OK\n\n${text}`, true);
-        } else {
-          logLine(`❌ ${API_URL} → ${response.status}\n\n${text}`, false);
-        }
+        const data = await response.text();
+        logOutput(`Status: ${response.status}\n\n${data}`);
       } catch (err) {
-        logLine(`❌ ${API_URL} → Network or CORS Error: ${err.message}`, false);
+        logOutput(`Error: ${err.message}`);
       }
     }
 
-    runTest();
+    function fetchProfile() {
+      const username = document.getElementById('username').value.trim();
+      if (!username) return logOutput('Please enter a username.');
+      fetchFromAPI(`${BASE_URL}/${username}`);
+    }
+
+    function fetchTweets() {
+      const username = document.getElementById('username').value.trim();
+      if (!username) return logOutput('Please enter a username.');
+      fetchFromAPI(`${BASE_URL}/${username}/tweets`);
+    }
+
+    function analyzeProfile() {
+      const username = document.getElementById('username').value.trim();
+      if (!username) return logOutput('Please enter a username.');
+      fetchFromAPI(`${BASE_URL}/${username}/analyze`);
+    }
   </script>
 </body>
 </html>
