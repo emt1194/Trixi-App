@@ -11,7 +11,7 @@
   </style>
 </head>
 <body>
-  <h1>🔍 Trixi API Test Web App</h1>
+  <h1>Trixi API Test Web App</h1>
 
   <label>
     Twitter Username:
@@ -21,6 +21,7 @@
   <button onclick="fetchProfile()">Fetch Profile</button>
   <button onclick="fetchTweets()">Fetch Tweets</button>
   <button onclick="analyzeProfile()">Analyze Profile</button>
+  <button onclick="fetchUsage()">Check API Usage</button>
 
   <div id="output">Results will appear here...</div>
 
@@ -63,6 +64,10 @@
       const username = document.getElementById('username').value.trim();
       if (!username) return logOutput('Please enter a username.');
       fetchFromAPI(`${BASE_URL}/${username}/analyze`);
+    }
+
+    function fetchUsage() {
+      fetchFromAPI('https://api.trixiai.net/api/social/usage');
     }
   </script>
 </body>
