@@ -16,6 +16,8 @@ body {
 	position: fixed;
 }
 
+
+
 .solana-button {
 	position: relative;
 	padding: 0.5rem 1.5rem;
@@ -128,6 +130,15 @@ body {
 		white-space: nowrap;
 		font-size: 0.95rem;
 		/* optional tweak to help fit smaller screens */
+	}
+
+	.margin-fix-ios
+{
+	margin-left:5px!important;
+}
+    #settings-btn
+	{
+		margin-left:5px;
 	}
 }
 
