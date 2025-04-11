@@ -119,7 +119,7 @@ function formatOutput(data, command) {
   if (command === '/ask') {
     return `
       <div class="bg-[#1C1E26] text-white p-4 rounded-md">
-        <h3 class="text-lg font-semibold text-[#00FFA3] mb-2">🤖 TrixiAI says:</h3>
+        <h3 id="trixi-says" class="text-lg trixi-says font-semibold text-[#00FFA3] mb-2">🤖 TrixiAI says:</h3>
         <p class="text-sm text-white leading-relaxed">${data.answer}</p>
       </div>
     `;
