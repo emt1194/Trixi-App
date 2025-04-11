@@ -211,7 +211,7 @@ body {
 }
 
 #primary-panel {
-	height: 480px;
+	min-height: 360px;
 	margin-top: 0px;
 }
 

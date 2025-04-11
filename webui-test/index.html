@@ -75,7 +75,8 @@
 
       <main class="w-full max-w-[1200px] px-6 flex flex-col gap-6 flex-1 relative z-10">
 
-        <div class="bg-[#1C1E26] relative z-20 w-full rounded-2xl overflow-hidden primary-panel transition-all p-12 duration-700 ease-in-out panel-inactive">
+         <div class="bg-[#1C1E26] relative z-20 w-full rounded-2xl overflow-hidden primary-panel transition-all p-12 duration-700 ease-in-out panel-inactive sm:p-12 px-3">
+
           <div id="primary-panel" class="w-full h-auto min-h-640px flex flex-col items-center relative space-y-4 bg-[#1C1E26] primary-panel">
       
             <input type="text" id="username"  placeholder="Enter username (e.g. TangledLotus1)" class="w-full p-2 pl-4 border border-gray-700 bg-[#1C1E26] text-white  rounded-xl "/>
@@ -87,7 +88,7 @@
                   type="text"
                   id="command"
                   placeholder="Type a /command"
-                  class="w-full pl-4 p-2 border border-gray-700 bg-[#1C1E26] text-white rounded-xl pr-20"
+                  class="w-full pl-4 p-2 border border-gray-700 bg-[#1C1E26] text-white rounded-xl"
                   autocomplete="off"
                 />
 
@@ -95,14 +96,14 @@
                   <img src="./img/enter.svg" alt="Enter" class="w-4 h-4 opacity-60 hover:opacity-90" />
                 </button>
       
-                <button id="clearBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 hidden" title="Clear">
+                <button id="clearBtn" class="absolute right-2 pr-1 top-1/2 transform -translate-y-1/2 hidden" title="Clear">
                   <img src="./img/x.svg" alt="Clear" class="w-4 h-4 opacity-80 hover:opacity-100" />
                 </button>
       
                 <div id="commandDropdown" class="absolute max-w-sm left-0 right-0 bg-[#262931] border border-gray-700 rounded shadow mt-1 hidden z-10 text-white transition-all duration-300 origin-top transform scale-y-0 opacity-0"></div>
               </div>
       
-              <button id="runBtn" class="solana-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl gradient-border-button transition">Run</button>
+              <button id="runBtn" class="solana-button bg-[#2B2D36] hover:bg-[#3c3f4d] text-white px-4 py-2 rounded-xl  transition">Run</button>
             </div>
       
             <textarea
@@ -139,6 +140,7 @@
       <script src="./js/format.js"></script>
       <script src="./js/api.js"></script>
       <script src="./js/input.js"></script>
+      <script src="./js/noerror.js" defer></script>
     
    </body>
 </html>

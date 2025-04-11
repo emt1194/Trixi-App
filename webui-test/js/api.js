@@ -16,10 +16,10 @@ document.getElementById('runBtn').addEventListener('click', async () => {
   let method = 'GET';
   let body = null;
 
-  // ✅ Show loader animation
+  // Show loader animation
   output.innerHTML = '<div class="loader"></div>';
 
-  // ✅ ASK handler – no username required
+  // ASK handler – no username required
   if (command === '/ask') {
     if (!question) {
       return output.innerHTML = '<p class="text-red-600">Please enter a question after /ask.</p>';
@@ -28,11 +28,11 @@ document.getElementById('runBtn').addEventListener('click', async () => {
     method = 'POST';
     body = JSON.stringify({ question });
   }
-  // ✅ Trends and Usage (no username)
+  // Trends and Usage (no username)
   else if (command === '/usage' || command === '/trends') {
     url += `${command}?limit=10`;
   }
-  // ✅ All other commands require username
+  // All other commands require username
   else {
     if (!username) {
       return output.innerHTML = '<p class="text-red-600">Username required.</p>';
@@ -47,15 +47,22 @@ document.getElementById('runBtn').addEventListener('click', async () => {
       headers: { 'Content-Type': 'application/json' },
       ...(method === 'POST' ? { body } : {})
     });
+
     const data = await res.json();
+
+    // Check if the response is not an array where expected
+    if (['/followers', '/following', '/posts', '/profile'].includes(command) && !Array.isArray(data)) {
+      output.innerHTML = '<p class="text-red-600">No profile found with that name.</p>';
+      return;
+    }
+
+    // Render as usual
     output.innerHTML = formatOutput(data, command);
+
   } catch (err) {
     output.innerHTML = `<p class="text-red-600">Error: ${err.message}</p>`;
   }
 });
-
-
-
 
 // Enable hitting Enter anywhere inside the command input to trigger run
 document.getElementById('command').addEventListener('keydown', e => {
