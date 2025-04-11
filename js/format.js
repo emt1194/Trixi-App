@@ -117,13 +117,26 @@ function formatOutput(data, command) {
   }
 
   if (command === '/ask') {
+    const selected = localStorage.getItem('selectedTrixi') || '1';
+    const avatarUrl = {
+      1: './img/trixi-avatar-cgi.jpg',
+      2: './img/trixi-avatar-dbz.jpg',
+      3: './img/trixi-avatar-cyberpunk.jpg',
+      4: './img/trixi-avatar-pixel.jpg',
+      5: './img/trixi-avatar-ghibli.jpg'
+    }[selected];
+  
     return `
       <div class="bg-[#1C1E26] text-white p-4 rounded-md">
-        <h3 id="trixi-says" class="text-lg trixi-says font-semibold text-[#00FFA3] mb-2">🤖 TrixiAI says:</h3>
+        <h3 id="trixi-says" class="text-lg trixi-says font-semibold text-[#00FFA3] mb-2 flex items-center gap-2">
+          <img src="${avatarUrl}" alt="Trixi Avatar" class="w-[30px] h-[30px] rounded-full" />
+          TrixiAI says:
+        </h3>
         <p class="text-sm text-white leading-relaxed">${data.answer}</p>
       </div>
     `;
   }
+  
 
   return `<pre class="bg-[#1C1E26] text-white p-4 rounded-md whitespace-pre-wrap">${JSON.stringify(data, null, 2)}</pre>`;
 }

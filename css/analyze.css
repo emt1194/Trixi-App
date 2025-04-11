@@ -14,6 +14,10 @@
   margin-top:80px;
 }
 
+#wallet-message .loader {
+  margin-top: 0px !important;
+}
+
 .loader::before,
 .loader::after {
   content: "";
