@@ -37,16 +37,19 @@ function formatMarkdownLike(text) {
   }
   
   const outputEl = document.getElementById('output');
+  const commandInput = document.getElementById('command');
+  
   let lastUnformattedText = '';
+  let lastCommand = '';
   
   function getUnformattedBodyText() {
     const clone = outputEl.cloneNode(true);
   
-    // Remove known formatting wrapper if exists
+    // Remove any previously formatted content
     const formatted = clone.querySelector('#formatted');
     if (formatted) formatted.remove();
   
-    // Remove the static trixi header (by class or id)
+    // Remove the header
     const trixi = clone.querySelector('.trixi-says, #trixi-says');
     if (trixi) trixi.remove();
   
@@ -54,22 +57,24 @@ function formatMarkdownLike(text) {
   }
   
   function observeOutputFormatting() {
-    if (!outputEl) return;
+    if (!outputEl || !commandInput) return;
+  
+    const command = commandInput.value.trim();
+    if (!command.startsWith('/ask')) return;
   
     const hasFormatted = outputEl.querySelector('#formatted');
     const unformatted = getUnformattedBodyText();
   
     if (!hasFormatted && unformatted && unformatted !== lastUnformattedText) {
       lastUnformattedText = unformatted;
+      lastCommand = command;
   
-      // Preserve the static header
-      const preservedHeader = outputEl.querySelector('.trixi-says, #trixi-says')?.outerHTML || '';
-  
+      // Preserve static header
+      const header = outputEl.querySelector('.trixi-says, #trixi-says')?.outerHTML || '';
       const formattedHTML = formatMarkdownLike(unformatted);
-      outputEl.innerHTML = preservedHeader + formattedHTML;
+      outputEl.innerHTML = header + formattedHTML;
     }
   }
   
-  // Run every 200ms
   setInterval(observeOutputFormatting, 200);
   

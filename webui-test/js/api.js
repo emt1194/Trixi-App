@@ -51,7 +51,8 @@ document.getElementById('runBtn').addEventListener('click', async () => {
     const data = await res.json();
 
     // Check if the response is not an array where expected
-    if (['/followers', '/following', '/posts', '/profile'].includes(command) && !Array.isArray(data)) {
+    if (['/followers', '/following', '/posts'].includes(command) && !Array.isArray(data)) {
+
       output.innerHTML = '<p class="text-red-600">No profile found with that name.</p>';
       return;
     }
