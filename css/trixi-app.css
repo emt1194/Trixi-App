@@ -540,4 +540,31 @@ width: 10px;
 	opacity: 1 !important;
   }
 
+  .no-scrollbar::-webkit-scrollbar {
+	display: none;
+  }
+  .no-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+  }
+  
+  #trixi-choices {
+	overflow-x: auto;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+	scroll-behavior: smooth;
+	display: flex;
+  }
+  
+  #trixi-choices img {
+	flex: 0 0 auto; /* Prevent images from shrinking */
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+	display: none;
+  }
+  .no-scrollbar {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+  }
   

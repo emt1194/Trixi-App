@@ -55,29 +55,52 @@
                   </div>
                </button>
 
-               <div id="settings-dropdown" class="hidden absolute right-0 mt-2 w-auto min-w-[264px] bg-[#2B2D36] text-white rounded-xl shadow-lg border border-[#3C3F4D] z-50 transition transform duration-200 scale-95 origin-top-right z-50">
-                  <button id="disconnect-wallet" class="w-full text-center px-4 py-2 hover:bg-[#3C3F4D] rounded-t-xl">
-                     Disconnect Wallet
-                   </button>
-                   
-                   <button onclick="showFloatingTooltip(event)" class="w-full text-center px-4 py-2 opacity-60 cursor-pointer hover:bg-[#3C3F4D]">
-                     Trading Interface
-                   </button>
-                   
-                   <button onclick="showFloatingTooltip(event)" class="w-full text-center px-4 py-2 opacity-60 cursor-pointer hover:bg-[#3C3F4D]">
-                     Advanced Settings
-                   </button>
-                  
-<div id="trixi-choices" class="flex gap-2 pt-3 px-4">
-  <img src="./img/trixi-avatar-cgi.jpg" class="trixi-option w-10 h-10 rounded-lg cursor-pointer opacity-60 hover:opacity-100" data-trixi="1">
-  <img src="./img/trixi-avatar-dbz.jpg" class="trixi-option w-10 h-10 rounded-lg cursor-pointer opacity-60 hover:opacity-100" data-trixi="2">
-  <img src="./img/trixi-avatar-cyberpunk.jpg" class="trixi-option w-10 h-10 rounded-lg cursor-pointer opacity-60 hover:opacity-100" data-trixi="3">
-  <img src="./img/trixi-avatar-pixel.jpg" class="trixi-option w-10 h-10 rounded-lg cursor-pointer opacity-60 hover:opacity-100" data-trixi="4">
-  <img src="./img/trixi-avatar-ghibli.jpg" class="trixi-option w-10 h-10 rounded-lg cursor-pointer opacity-60 hover:opacity-100" data-trixi="5">
-</div>
-<div class="px-4 pt-1 pb-2 text-right text-xs text-gray-400 cursor-default">Choose your Trixi</div>
+               <div id="settings-dropdown" class="hidden absolute right-0 mt-2 w-auto min-w-[200px] bg-[#2B2D36] text-white rounded-xl shadow-lg border border-[#3C3F4D] z-50 transition transform duration-200 scale-95 origin-top-right z-50">
 
-               </div>
+                  <button id="disconnect-wallet" class="w-full text-center px-4 py-2 hover:bg-[#3C3F4D] rounded-t-xl">
+                    Disconnect Wallet
+                  </button>
+                
+                  <button onclick="showFloatingTooltip(event)" class="w-full text-center px-4 py-2 opacity-60 cursor-pointer hover:bg-[#3C3F4D]">
+                    Trading Interface
+                  </button>
+                
+                  <button onclick="showFloatingTooltip(event)" class="w-full text-center px-4 py-2 opacity-60 cursor-pointer hover:bg-[#3C3F4D]">
+                    Advanced Settings
+                  </button>
+                
+                  <!-- Scrollable avatar selector with gradient hints -->
+                  <div class="relative overflow-hidden">
+                    <!-- Gradient hints -->
+                    <div class="pointer-events-none absolute top-0 left-0 h-full w-6 z-10 bg-gradient-to-r from-[#2B2D36] to-transparent"></div>
+                    <div class="pointer-events-none absolute top-0 right-0 h-full w-6 z-10 bg-gradient-to-l from-[#2B2D36] to-transparent"></div>
+                
+                    <!-- Scrollable avatar strip -->
+                    <div id="trixi-choices"
+                         class="flex gap-2 px-4 py-2 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory cursor-grab">
+                      <img src="./img/avatars/trixi-avatar-cgi.jpg" class="trixi-option w-14 h-14 rounded-lg cursor-pointer opacity-60 hover:opacity-100 snap-start" data-trixi="1">
+                      <img src="./img/avatars/trixi-avatar-dbz.jpg" class="trixi-option w-14 h-14 rounded-lg cursor-pointer opacity-60 hover:opacity-100 snap-start" data-trixi="2">
+                      <img src="./img/avatars/trixi-futuristic-2.jpg" class="trixi-option w-14 h-14 rounded-lg cursor-pointer opacity-60 hover:opacity-100 snap-start" data-trixi="3">
+                      <img src="./img/avatars/trixi-avatar-pixel.jpg" class="trixi-option w-14 h-14 rounded-lg cursor-pointer opacity-60 hover:opacity-100 snap-start" data-trixi="4">
+                      <img src="./img/avatars/trixi-avatar-ghibli.jpg" class="trixi-option w-14 h-14 rounded-lg cursor-pointer opacity-60 hover:opacity-100 snap-start" data-trixi="5">
+                      <img src="./img/avatars/trixi-futuristic-1.jpg" class="trixi-option w-14 h-14 rounded-lg cursor-pointer opacity-60 hover:opacity-100 snap-start" data-trixi="6">
+                      <img src="./img/avatars/trixi-pepe.jpg" class="trixi-option w-14 h-14 rounded-lg cursor-pointer opacity-60 hover:opacity-100 snap-start" data-trixi="7">
+                      <button id="scroll-left-btn"
+                      class="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-[#2B2D36] p-1 rounded-full shadow-md">
+                <img src="./img/chevron-left.svg" class="w-5 h-5" alt="Scroll Left">
+              </button>
+              <button id="scroll-right-btn"
+              class="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-[#2B2D36] p-1 rounded-full shadow-md">
+        <img src="./img/chevron-right.svg" class="w-5 h-5" alt="Scroll Right">
+      </button>
+                     </div>
+                  </div>
+                
+                  <div class="px-4 pt-1 pb-2 text-right text-xs text-gray-400 cursor-default">
+                    Choose your Trixi
+                  </div>
+                </div>
+                
             </div>
 
   <div class="relative margin-fix-ios z-[1000] z-1000">

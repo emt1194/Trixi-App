@@ -1,8 +1,7 @@
-const BASE_URL = 'https://trixi-worker.emt4495.workers.dev/api/social';
+const BASE_URL = 'https://brain.trixiai.net/api/social';
 
 document.getElementById('command').addEventListener('change', () => {
   const isAsk = window.getResolvedCommand() === '/ask';
-  document.getElementById('aiInput').classList.toggle('hidden', !isAsk);
 });
 
 document.getElementById('runBtn').addEventListener('click', async () => {

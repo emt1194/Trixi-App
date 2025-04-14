@@ -119,11 +119,13 @@ function formatOutput(data, command) {
   if (command === '/ask') {
     const selected = localStorage.getItem('selectedTrixi') || '1';
     const avatarUrl = {
-      1: './img/trixi-avatar-cgi.jpg',
-      2: './img/trixi-avatar-dbz.jpg',
-      3: './img/trixi-avatar-cyberpunk.jpg',
-      4: './img/trixi-avatar-pixel.jpg',
-      5: './img/trixi-avatar-ghibli.jpg'
+      1: './img/avatars/trixi-avatar-cgi.jpg',
+      2: './img/avatars/trixi-avatar-dbz.jpg',
+      3: './img/avatars/trixi-futuristic-2.jpg',
+      4: './img/avatars/trixi-avatar-pixel.jpg',
+      5: './img/avatars/trixi-avatar-ghibli.jpg',
+      6: './img/avatars/trixi-futuristic-1.jpg.jpg',
+      7: './img/avatars/trixi-pepe.jpg'      
     }[selected];
   
     return `
